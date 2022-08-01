@@ -63,7 +63,7 @@ namespace ImageToText
                             using (var page = engine.Process(img))
                             {
                                 var text = page.GetText();
-                                rtbOcrResult.Text = text;
+                                rtbOcrResult.Text = text.Trim();
                             }
                         }
                     }
