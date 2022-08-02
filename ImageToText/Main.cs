@@ -14,7 +14,7 @@ namespace ImageToText
 {
     public partial class Main : Form
     {
-        string part;
+        string path;
         public Main()
         {
             InitializeComponent();
@@ -29,10 +29,10 @@ namespace ImageToText
             ofd.Filter = "Image Files(*.jpg;*.jpeg;*.png;*.bmp;*.gif)|*.png; *.jpg; *.bmp; *.gif";
             if(ofd.ShowDialog() == DialogResult.OK)
             {
-                part = System.IO.Path.GetFullPath(ofd.FileName);
-                PictureBox.Image = Image.FromFile(part);
+                path = System.IO.Path.GetFullPath(ofd.FileName);
+                PictureBox.Image = Image.FromFile(path);
                 PictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                StatusLabel.Text = part+ " loaded";
+                StatusLabel.Text = path + " loaded";
             }
         }
 
@@ -45,8 +45,6 @@ namespace ImageToText
         {
             try
             {
-
-
                 if (PictureBox.Image == null)
                 {
                     MessageBox.Show("Please load an image first");
@@ -58,7 +56,7 @@ namespace ImageToText
                     rtbOcrResult.Clear();
                     using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
                     {
-                        using (var img = Pix.LoadFromFile(part))
+                        using (var img = Pix.LoadFromFile(path))
                         {
                             using (var page = engine.Process(img))
                             {
